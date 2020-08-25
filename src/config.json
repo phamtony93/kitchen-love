@@ -1,0 +1,12 @@
+{
+    "firebaseConfig": {
+        "apiKey": "AIzaSyATh4HMwUtqJ-eeT6Z5yIBMmYoCk4ij3VM",
+        "authDomain": "kitchen-love-37aba.firebaseapp.com",
+        "databaseURL": "https://kitchen-love-37aba.firebaseio.com",
+        "projectId": "kitchen-love-37aba",
+        "storageBucket": "kitchen-love-37aba.appspot.com",
+        "messagingSenderId": "26914787067",
+        "appId": "1:26914787067:web:8358abc49b9031ac43aa5e",
+        "measurementId": "G-EFK436WYLS"
+    }
+}
