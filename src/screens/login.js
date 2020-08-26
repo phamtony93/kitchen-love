@@ -10,12 +10,13 @@ const Login = (props) => {
         return <Redirect to='/' />
     } else {
         return (
-            <Container className="h-100">
+            <div>
                 <Col className="justify-content-center align-self-center">
                     <h2>Welcome to Kitchen Love</h2>
                     <Button onClick={ () => login(props.setAuthenticated, props.setRole)}>Login With Facebook</Button>
                 </Col>
-            </Container>
+            </div>
+
         )
     }
 }

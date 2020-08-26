@@ -11,7 +11,7 @@ export const firestore = firebaseApp.firestore();
 
 export const provider = new firebase.auth.FacebookAuthProvider();
 
-export const login = (setAuthentication, setRole) => {
+export const login = (setAuthenticated, setRole) => {
     let userData = null;
     let firebaseToken = null;
     let tokenId = null;
@@ -25,10 +25,17 @@ export const login = (setAuthentication, setRole) => {
         //use redux here? better to send to secured server
         //TODO: requests should get routed to server-side with firebaseToken
         // localStorage.setItem('firebaseToken', firebaseToken);
+        console.log(userData)
         try {
             userRole = await getUserRole(userData.uid);
             setRole(userRole);
-            setAuthentication(true);
+            setAuthenticated(true);
+            let profile = {};
+            profile["photoUrl"] = userData.photoURL;
+            profile["email"] = userData.email;
+            profile["displayName"] = userData.displayName;
+            localStorage.setItem("profile", JSON.stringify(profile));
+            localStorage.setItem("authenticated", true);
         } catch(e) {
             console.log(e);
         }
@@ -44,6 +51,8 @@ export const logout = (setAuthenticated, setRole) => {
     })
     setAuthenticated(false);
     setRole(null);
+    localStorage.setItem("profile", null);
+    localStorage.setItem("authenticated", false);
 }
 
 export const getUserRole = (uid) => {
