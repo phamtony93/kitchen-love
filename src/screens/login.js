@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Container } from 'react-bootstrap';
+import { Button, Col } from 'react-bootstrap';
 import { login } from '../firebase';
 import {Redirect } from 'react-router-dom';
 

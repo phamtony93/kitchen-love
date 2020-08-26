@@ -4,7 +4,11 @@ import Feed from './screens/Feed'
 import Profile from './screens/Profile'
 import ForbiddenAccess from './screens/ForbiddenAccess'
 import NotFound from './screens/NotFound'
+import About from './screens/About'
+import Contact from './screens/Contact'
+import Cart from './screens/Cart'
 import MainNavBar from './components/MainNavBar'
+import Jumbotron from './components/Jumbotron'
 import './components/Layout'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.scss';
@@ -31,6 +35,7 @@ function App() {
           setAuthenticated={setAuthenticated}
           setRole={setRole}  
           />
+        <Jumbotron/>
         <Layout>
           <Switch>
             <Route exact path='/' component={Feed} />
@@ -41,7 +46,10 @@ function App() {
                 setRole={setRole}
                 authenticated={authenticated} />
             }} />
+            <Route path='/about' component= {About} />
+            <Route path='/contact' component= {Contact} />
             <Route path='/profile' component={Profile} />
+            <Route path='/cart' component={Cart} />
             <Route path='/404' component= {ForbiddenAccess} />
             <Route component={NotFound} />
           </Switch>
