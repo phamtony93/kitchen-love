@@ -1,6 +1,7 @@
 import React from 'react';
 import { Navbar, Nav, NavLink, NavbarBrand, Form, FormControl } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { logout } from '../firebase'
 
 const MainNavBar = (props) => {
 
@@ -15,7 +16,7 @@ const MainNavBar = (props) => {
                 <NavLink className="text-info" as={Link} to="/profile">Profile</NavLink>
                 {/* <NavLink className="text-primary" >About</NavLink> */}
             </Nav>
-            {props.authenticated ? <NavLink className="text-info" as={Link} to='/'>Logout</NavLink> : <NavLink className="text-info" as={Link} to="/login">Login</NavLink>}
+            {props.authenticated ? <NavLink className="text-info" as={Link} to='/' onClick={() => logout(props.setAuthenticated, props.setRole)}>Logout</NavLink> : <NavLink className="text-info" as={Link} to="/login">Login</NavLink>}
         </Navbar>
     );
 }

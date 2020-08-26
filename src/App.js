@@ -24,7 +24,11 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <MainNavBar authenticated={authenticated}/>
+        <MainNavBar 
+          authenticated={authenticated}
+          setAuthenticated={setAuthenticated}
+          setRole={setRole}  
+          />
         <Switch>
           <Route exact path='/' component={Feed} />
           <Route path='/login' render={(props) => {
