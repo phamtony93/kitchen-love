@@ -5,9 +5,23 @@ $bg-image: url('/public/images/bg_1.jpg');
 }
 
 .jumbotron {
-  background-image: url('/public/images/bg_1.jpg');
+  background-image: url('./assets/bg_1.jpg') !important;
   background-repeat: no-repeat;
+  // background-size: cover;
+  position: relative;
   background-position: center;
+  height: 200px;
+  color: white;
+}
+
+.overlay {
+  background-color: black;
+  opacity: 0.15;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
 }
 
 // http://worldkings.org/Userfiles/Upload/images/Yale.jpg

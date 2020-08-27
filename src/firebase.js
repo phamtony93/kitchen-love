@@ -25,7 +25,6 @@ export const login = (setAuthenticated, setRole) => {
         //use redux here? better to send to secured server
         //TODO: requests should get routed to server-side with firebaseToken
         // localStorage.setItem('firebaseToken', firebaseToken);
-        console.log(userData)
         try {
             userRole = await getUserRole(userData.uid);
             setRole(userRole);
@@ -36,6 +35,8 @@ export const login = (setAuthenticated, setRole) => {
             profile["displayName"] = userData.displayName;
             localStorage.setItem("profile", JSON.stringify(profile));
             localStorage.setItem("authenticated", true);
+            let routes = await getAccessableRoutesFromRole(userRole);
+            localStorage.setItem("accessableRoutes", routes);
         } catch(e) {
             console.log(e);
         }
@@ -53,10 +54,10 @@ export const logout = (setAuthenticated, setRole) => {
     setRole(null);
     localStorage.setItem("profile", null);
     localStorage.setItem("authenticated", false);
+    localStorage.setItem("accessableRoutes", null);
 }
 
 export const getUserRole = (uid) => {
-    console.log(uid)
     return new Promise((resolve, reject) => {
         firestore.collection('users').where('uid', '==', uid).get().then(snapshot => {
             if (snapshot.docs[0]) {
@@ -66,4 +67,27 @@ export const getUserRole = (uid) => {
             }
         })
     })
+}
+
+//Should accessable routes be stored locally to reduce RTT cost?
+export const getAccessableRoutesFromRole = (role) => {
+    return new Promise((resolve, reject) => {
+        firestore.collection('roles').doc(role).get().then(snapshot => {
+            let { routes } = snapshot.data()
+            if (routes) {
+                resolve(routes)
+            } else {
+                reject('Could not find role')
+            }
+        })
+    })
+}
+
+export const checkUserAccessableRoutes = (route) => {
+    const routes = localStorage.getItem("accessableRoutes")
+    if (routes.includes(route)) {
+        return true
+    } else {
+        return false
+    }
 }
