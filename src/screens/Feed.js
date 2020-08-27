@@ -1,18 +1,20 @@
-import React from 'react';
-import { Container, CardImg, Card } from 'react-bootstrap';
-// import { getAccessableRoutes } from '../firebase'
+import React, { useState } from 'react';
+import { Container } from 'react-bootstrap';
+import { getListings } from '../firebase'
+import FoodCard from '../components/FoodCard'
 
 const Feed = () => {
+    let [ listings, setListings ] = useState(null)
+    // const foodList = getListings().then(listing => {
+    //     setListings(listing)
+    // })
+
     return (
         <Container>
-            <Card>
-                <CardImg></CardImg>
-                <Card.Body>
-                    <Card.Title>Welcome to Kitchen Love!</Card.Title>
-                    <Card.Text>Get fed by at home chefs through Kitchen Love</Card.Text>
-                </Card.Body>
-                {/* <button onClick={() => getAccessableRoutes('buyer')}>get</button> */}
-            </Card>
+            {listings 
+            ? listings.map(listing => {
+                return FoodCard(listing)})
+            :     'Waiting'}
         </Container>
     )
 }

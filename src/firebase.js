@@ -91,3 +91,20 @@ export const checkUserAccessableRoutes = (route) => {
         return false
     }
 }
+
+// export const getListings = () => {
+//     return new Promise((resolve, reject) => {
+//         firestore.collection('listings').get().then(snapshot => {
+//             snapshot.map(doc => {
+//                 console.log(doc.data())
+//                 return doc.data()
+//             })
+//         })
+//     })
+// }
+
+export const getListings = async () => {
+    const snapshot = await firestore.collection('listings').get();
+    console.log(snapshot.docs.map(doc => doc.data()))
+    return snapshot.docs.map(doc => doc.data()); 
+}
