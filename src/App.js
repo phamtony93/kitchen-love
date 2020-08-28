@@ -20,13 +20,6 @@ function App() {
   let [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') === "true" ? true : false);
   let [ role, setRole] = useState(localStorage.getItem('role') ? localStorage.getItem('role') : 'anonymous');
   
-  // const updateRole = (newVal) => {
-  //   setRole(newVal);
-  // }
-
-  // const updateAuthentication = (newVal) => {
-  //   setAuthenticated(newVal);
-  // }
   console.log('app is being rebuilt')
   return (
     <div className="App">

@@ -24,4 +24,7 @@ $bg-image: url('/public/images/bg_1.jpg');
   bottom: 0;
 }
 
+#listing-table tr {
+  border-top-style: hidden !important;
+}
 // http://worldkings.org/Userfiles/Upload/images/Yale.jpg

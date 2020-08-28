@@ -105,6 +105,14 @@ export const checkUserAccessableRoutes = (route) => {
 
 export const getListings = async () => {
     const snapshot = await firestore.collection('listings').get();
-    console.log(snapshot.docs.map(doc => doc.data()))
-    return snapshot.docs.map(doc => doc.data()); 
+    // console.log(snapshot.docs.map(doc => {
+    //     let data = doc.data()
+    //     data.id = doc.id
+    //     return data
+    // }))
+    return snapshot.docs.map(doc => {
+        let data = doc.data()
+        data.id = doc.id
+        return data
+    }); 
 }
