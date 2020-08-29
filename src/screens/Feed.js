@@ -55,6 +55,7 @@ const Feed = () => {
                 handleCloseConfirmation={handleCloseConfirmation}
                 details={getDetailsFromListings(itemIdToConfirm)}
                 />
+            {/* Calling a functional component as a function is faster, as it does not call React.createElement but it may result in errors */}
             {/* {ItemConfirmation(showConfirmation, getDetailsFromListings(itemIdToConfirm))} */}
         </div>
 

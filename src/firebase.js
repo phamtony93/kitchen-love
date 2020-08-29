@@ -26,6 +26,7 @@ export const login = (setAuthenticated, setRole) => {
         //TODO: requests should get routed to server-side with firebaseToken
         // localStorage.setItem('firebaseToken', firebaseToken);
         try {
+            localStorage.setItem("uid", userData.uid)
             userRole = await getUserRole(userData.uid);
             setRole(userRole);
             setAuthenticated(true);
@@ -113,7 +114,9 @@ export const getListings = async () => {
     }); 
 }
 
-export const createOrder = async (order) => {
+export const createOrder = async (order, setOrderSubmitted) => {
     const res = await firestore.collection('orders').add(order);
     console.log('Added document with ID', res.id);
+    setOrderSubmitted(true);
+
 }

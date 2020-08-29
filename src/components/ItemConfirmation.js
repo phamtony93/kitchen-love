@@ -16,7 +16,8 @@ const ItemConfirmation = (props) => {
         } = props.details ? props.details : {};
 
     const addToCart = () => {
-        const cart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : [];
+        const cart = localStorage.getItem("cart") === "null" ?  [] : JSON.parse(localStorage.getItem("cart"));
+        console.log(cart)
         cart.push({
             details: props.details,
             quantity: quantity

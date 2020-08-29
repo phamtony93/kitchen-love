@@ -1,14 +1,21 @@
-import React from 'react'
-import { Table, Image, Button } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Table, Image, Button, Alert } from 'react-bootstrap'
+import { createOrder } from '../firebase'
+import OrderConfirmation from '../components/OrderConfirmation'
+
 
 const TAX_RATE = .0875;
 
 const Cart = () => {
+    let [ orderSubmitted, setOrderSubmitted ] = useState(false);
+    console.log('1')
+    console.log(orderSubmitted)
 
-    const isEmptyCart = localStorage.getItem("cart") ? false : true
+    const isEmptyCart = localStorage.getItem("cart") === "null" ? true : false
 
     //Use table for now, create custom component for better visuals
     const convertToTableRow = (cart) => {
+        if (cart === null) return null
         return cart.map(item => {
             return <tr>
                         <td><Image src={item.details.imageUrl} rounded style={{width:"30%", height: "auto"}}/></td>
@@ -20,7 +27,21 @@ const Cart = () => {
     }
 
     const calculateSubtotal = (cart) => {
+        if (cart === null) return 0
         return cart.reduce((total, item) => total += (item.quantity * item.details.price), 0)
+    }
+
+    const submitOrder = () => {
+        //process cart as an array of itemID and quantity
+        const cartData = {};
+        cartData['customerId'] = localStorage.getItem("uid")
+        cartData['order'] = cart.map( item => {
+            return {
+                itemId: item.details.id, 
+                quantity: item.quantity
+            }
+        });
+        createOrder(cartData, setOrderSubmitted);
     }
 
     const cart = !isEmptyCart ? JSON.parse(localStorage.getItem("cart")) : null
@@ -47,16 +68,19 @@ const Cart = () => {
                     <h4>Subtotal {subTotal}</h4><br/>
                     <h4>Taxes {taxes}</h4><br/>
                     <h4>Total {total}</h4>
-
                 </div>
-                <Button>Confirm</Button>
+                <Button onClick={() => submitOrder()}>Submit Order</Button>
+                <OrderConfirmation orderSubmitted={orderSubmitted} confirmationId={'123'}/>
             </div>
-
         )
     }
 
+    // console.log('3')
+    // console.log(isEmptyCart)
+    // console.log(localStorage.getItem("cart"))
     return (
         isEmptyCart ? displayEmpty() : displayCart()
+        
     )
 }
 
