@@ -103,8 +103,14 @@ export const checkUserAccessableRoutes = (route) => {
 //     })
 // }
 
+//Use one time pull vs. listener to prevent UI from updating real time
 export const getListings = async () => {
     const snapshot = await firestore.collection('listings').get();
     console.log(snapshot.docs.map(doc => doc.data()))
     return snapshot.docs.map(doc => doc.data()); 
+}
+
+export const createOrder = async (order) => {
+    const res = await firestore.collection('orders').add(order);
+    console.log('Added document with ID', res.id);
 }
