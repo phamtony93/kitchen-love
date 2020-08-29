@@ -1,5 +1,5 @@
 import React from 'react'
-import { Container, Col, Row, Image } from 'react-bootstrap'
+import { Image } from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
 
 const Profile = () => {
@@ -11,9 +11,6 @@ const Profile = () => {
             <div>Name: {profile.displayName}</div>
             <div className="my-2">Email: {profile.email}</div>
         </div>
-
-
-        // </Container>
     )
 }
 

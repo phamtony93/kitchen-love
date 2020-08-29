@@ -4,7 +4,7 @@ import { login } from '../firebase';
 import {Redirect } from 'react-router-dom';
 
 const Login = (props) => {
-
+    console.log(props)
     let isAuthenticated = (props.authenticated === "true" || props.authenticated === true) ? true : false;
     if (isAuthenticated) {
         return <Redirect to='/' />

@@ -24,11 +24,11 @@ const MainNavBar = (props) => {
                     <NavDropdown className="text-info" title={
                             <span className="text-info">Account</span>
                     }>
-                        {isAuthenticated && checkUserAccessableRoutes('profile') ? <NavLink className="text-info" as={Link} to='/profile'>Profile</NavLink> : null}
-                        {isAuthenticated && checkUserAccessableRoutes('cart') ? <NavLink className="text-info" as={Link} to='/cart'>Cart</NavLink> : null}
+                        {isAuthenticated && checkUserAccessableRoutes('profile') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/profile'>Profile</NavLink></NavDropdown.Item> : null}
+                        {isAuthenticated && checkUserAccessableRoutes('cart') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/cart'>Cart</NavLink></NavDropdown.Item> : null}
                         {props.authenticated 
-                            ? <NavLink className="text-info" as={Link} to='/' onClick={() => logout(props.setAuthenticated, props.setRole)}>Logout</NavLink> 
-                            : <NavLink className="text-info" as={Link} to="/login">Login</NavLink>}
+                            ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/' onClick={() => logout(props.setAuthenticated, props.setRole)}>Logout</NavLink></NavDropdown.Item> 
+                            : <NavDropdown.Item><NavLink className="text-info" as={Link} to="/login">Login</NavLink></NavDropdown.Item>}
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>
