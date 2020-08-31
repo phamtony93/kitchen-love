@@ -21,11 +21,12 @@ const MainNavBar = (props) => {
                     <NavLink className="text-info" as={Link} to='/'>Home</NavLink>
                     <NavLink className="text-info" as={Link} to='/about'>About</NavLink>
                     <NavLink className="text-info" as={Link} to='/contact'>Contact</NavLink>
-                    <NavDropdown className="text-info" title={
+                    <NavDropdown className="text-info" left title={
                             <span className="text-info">Account</span>
                     }>
                         {isAuthenticated && checkUserAccessableRoutes('profile') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/profile'>Profile</NavLink></NavDropdown.Item> : null}
                         {isAuthenticated && checkUserAccessableRoutes('cart') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/cart'>Cart</NavLink></NavDropdown.Item> : null}
+                        {isAuthenticated && checkUserAccessableRoutes('order-history') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/order-history'>Order History</NavLink></NavDropdown.Item> : null}
                         {props.authenticated 
                             ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/' onClick={() => logout(props.setAuthenticated, props.setRole)}>Logout</NavLink></NavDropdown.Item> 
                             : <NavDropdown.Item><NavLink className="text-info" as={Link} to="/login">Login</NavLink></NavDropdown.Item>}

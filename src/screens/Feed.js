@@ -18,7 +18,6 @@ const Feed = () => {
         getListings().then(listing => {
             setListings(listing)
         })
-        console.log('1')
     }, []);
 
     const getDetailsFromListings = (id) => {

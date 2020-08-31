@@ -3,8 +3,6 @@ import { Modal, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 const OrderConfirmation = (props) => {
-    console.log('3')
-    console.log(props.orderSubmitted)
     return (
         <Modal show={props.orderSubmitted}>
             <Modal.Body>

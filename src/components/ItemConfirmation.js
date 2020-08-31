@@ -17,7 +17,6 @@ const ItemConfirmation = (props) => {
 
     const addToCart = () => {
         const cart = localStorage.getItem("cart") === "null" ?  [] : JSON.parse(localStorage.getItem("cart"));
-        console.log(cart)
         cart.push({
             details: props.details,
             quantity: quantity
@@ -25,8 +24,6 @@ const ItemConfirmation = (props) => {
         localStorage.setItem("cart", JSON.stringify(cart));
         props.handleCloseConfirmation();
     }
-    console.log('1')
-    console.log(localStorage.getItem("cart"))
 
     return (
         <Modal show={props.showConfirmation} onHide={() => props.handleCloseConfirmation()}>

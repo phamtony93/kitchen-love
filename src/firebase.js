@@ -120,3 +120,18 @@ export const createOrder = async (order, setOrderSubmitted) => {
     setOrderSubmitted(true);
 
 }
+
+export const getOrderHistory = async (uid, setOrderHistory) => {
+    const orderHistory = await firestore.collection('orders').where('customerId', '==', uid).get().then(snapshot => {
+        if (snapshot.empty) {
+            console.log('no matching')
+        }
+        return snapshot.docs.map(doc => {
+            let data = doc.data();
+            console.log(data)
+            data['id'] = doc.id;
+            return data;
+        })
+    })
+    return orderHistory;
+}

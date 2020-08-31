@@ -19,7 +19,6 @@ const FoodCard = (props) => {
     }
 
     return (
-        // <div onClick={() => console.log('hellow')}>
             <Card style={{ width: '18rem' }} onClick={() => showConfirmation(id)}>
                 <CardImg style={{height:"300px", width: "17.9rem"}}src={imageUrl}/>
                 <Card.Body>
@@ -27,8 +26,6 @@ const FoodCard = (props) => {
                     <Card.Text>{description}</Card.Text>
                 </Card.Body>
             </Card>
-        // </div>
-
     )
 }
 

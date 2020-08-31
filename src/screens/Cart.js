@@ -8,8 +8,6 @@ const TAX_RATE = .0875;
 
 const Cart = () => {
     let [ orderSubmitted, setOrderSubmitted ] = useState(false);
-    console.log('1')
-    console.log(orderSubmitted)
 
     const isEmptyCart = localStorage.getItem("cart") === "null" ? true : false
 
@@ -33,7 +31,7 @@ const Cart = () => {
 
     const submitOrder = () => {
         //process cart as an array of itemID and quantity
-        const cartData = {};
+        let cartData = {};
         cartData['customerId'] = localStorage.getItem("uid")
         cartData['order'] = cart.map( item => {
             return {
@@ -41,6 +39,10 @@ const Cart = () => {
                 quantity: item.quantity
             }
         });
+        //Add current date time
+        const today = new Date();
+        const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        cartData['orderDate'] = date
         createOrder(cartData, setOrderSubmitted);
     }
 
@@ -75,9 +77,6 @@ const Cart = () => {
         )
     }
 
-    // console.log('3')
-    // console.log(isEmptyCart)
-    // console.log(localStorage.getItem("cart"))
     return (
         isEmptyCart ? displayEmpty() : displayCart()
         

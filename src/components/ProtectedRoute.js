@@ -11,7 +11,6 @@ const ProtectedRoute = ({ component: Component, ...rest}) => {
             const { path } = {...rest}
             const route = path.slice(1,)  
             const isAuthorized = checkUserAccessableRoutes(route)
-            console.log(isAuthorized)
             if (isAuthenticated && isAuthorized) {
                 return <Component {...props}/>
             } else if (isAuthenticated && !isAuthorized) {

@@ -7,6 +7,7 @@ import NotFound from './screens/NotFound';
 import About from './screens/About';
 import Contact from './screens/Contact';
 import Cart from './screens/Cart';
+import OrderHistory from './screens/OrderHistory'
 import MainNavBar from './components/MainNavBar';
 import Jumbotron from './components/Jumbotron';
 import './components/Layout';
@@ -40,8 +41,9 @@ function App() {
                 setRole={setRole}
                 authenticated={authenticated} />
             }} />
-            <Route path='/about' component= {About} />
-            <Route path='/contact' component= {Contact} />
+            <Route path='/about' component={About} />
+            <Route path='/contact' component={Contact} />
+            <ProtectedRoute path='/order-history' component={OrderHistory}/>
             <ProtectedRoute path='/profile' component={Profile} />
             <ProtectedRoute path='/cart' component={Cart} />
             <Route path='/403' component= {ForbiddenAccess} />
