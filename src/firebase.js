@@ -86,6 +86,7 @@ export const getAccessableRoutesFromRole = (role) => {
 
 export const checkUserAccessableRoutes = (route) => {
     const routes = localStorage.getItem("accessableRoutes")
+    if (!routes) return false
     if (routes.includes(route)) {
         return true
     } else {
