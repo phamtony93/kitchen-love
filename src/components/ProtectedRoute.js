@@ -1,16 +1,26 @@
-import React from 'react'
-import { Route, Redirect } from 'react-router-dom'
-import { checkUserAccessableRoutes } from '../firebase'
+import React from 'react';
+import { Route, Redirect } from 'react-router-dom';
+import { useStateProviderValue } from '../StateProvider';
 
 const ProtectedRoute = ({ component: Component, ...rest}) => {
+    const [{ user, accessableRoutes }] = useStateProviderValue();
+
+    const checkUserAccessableRoutes = (route) => {
+        if (accessableRoutes === null) return false
+        if (accessableRoutes.includes(route)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const isAuthenticated = user ? true : false
+
     return (
         <Route {...rest} render={(props) => {
-            const isAuthenticated = (localStorage.getItem("authenticated") === "true" || localStorage.getItem("authenticated") === true)
-                ? true
-                : false
             const { path } = {...rest}
             const route = path.slice(1,)  
-            const isAuthorized = checkUserAccessableRoutes(route)
+            const isAuthorized = isAuthenticated ? checkUserAccessableRoutes(route) : false
             if (isAuthenticated && isAuthorized) {
                 return <Component {...props}/>
             } else if (isAuthenticated && !isAuthorized) {

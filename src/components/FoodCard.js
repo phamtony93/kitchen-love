@@ -1,10 +1,7 @@
 import React from 'react'
 import { Card, CardImg } from 'react-bootstrap'
-// import ItemConfirmation from '../components/ItemConfirmation'
 
 const NOT_AVAIALABLE = '../assets/not_available';
-
-
 
 const FoodCard = (props) => {
     const {

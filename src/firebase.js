@@ -1,3 +1,4 @@
+import React from 'react'
 import config from './config';
 import firebase from 'firebase';
 
@@ -12,32 +13,30 @@ export const firestore = firebaseApp.firestore();
 export const provider = new firebase.auth.FacebookAuthProvider();
 
 export const login = (setAuthenticated, setRole) => {
+
     let userData = null;
     let firebaseToken = null;
-    let tokenId = null;
-    let routes = null;
-    let userRole = null;
+    // let tokenId = null;
 
     auth.signInWithPopup(provider).then(async (result) => {
         userData = result.user;
-        tokenId = result.credential.accessToken;
+        // tokenId = result.credential.accessToken;
         firebaseToken = await auth.currentUser.getIdToken();
-        //use redux here? better to send to secured server
+
         //TODO: requests should get routed to server-side with firebaseToken
-        // localStorage.setItem('firebaseToken', firebaseToken);
         try {
-            localStorage.setItem("uid", userData.uid)
-            userRole = await getUserRole(userData.uid);
-            setRole(userRole);
-            setAuthenticated(true);
-            let profile = {};
-            profile["photoUrl"] = userData.photoURL;
-            profile["email"] = userData.email;
-            profile["displayName"] = userData.displayName;
-            localStorage.setItem("profile", JSON.stringify(profile));
-            localStorage.setItem("authenticated", true);
-            let routes = await getAccessableRoutesFromRole(userRole);
-            localStorage.setItem("accessableRoutes", routes);
+            // localStorage.setItem("uid", userData.uid)
+            // userRole = await getUserRole(userData.uid);
+            // setRole(userRole);
+            // setAuthenticated(true);
+            // let profile = {};
+            // profile["photoUrl"] = userData.photoURL;
+            // profile["email"] = userData.email;
+            // profile["displayName"] = userData.displayName;
+            // localStorage.setItem("profile", JSON.stringify(profile));
+            // localStorage.setItem("authenticated", true);
+            // let routes = await getAccessableRoutesFromRole(userRole);
+            // localStorage.setItem("accessableRoutes", routes);
         } catch(e) {
             console.log(e);
         }
@@ -51,11 +50,6 @@ export const logout = (setAuthenticated, setRole) => {
     }).catch((error) => {
         console.log(error);
     })
-    setAuthenticated(false);
-    setRole(null);
-    localStorage.setItem("profile", null);
-    localStorage.setItem("authenticated", false);
-    localStorage.setItem("accessableRoutes", null);
 }
 
 export const getUserRole = (uid) => {
@@ -84,26 +78,6 @@ export const getAccessableRoutesFromRole = (role) => {
     })
 }
 
-export const checkUserAccessableRoutes = (route) => {
-    const routes = localStorage.getItem("accessableRoutes")
-    if (!routes) return false
-    if (routes.includes(route)) {
-        return true
-    } else {
-        return false
-    }
-}
-
-// export const getListings = () => {
-//     return new Promise((resolve, reject) => {
-//         firestore.collection('listings').get().then(snapshot => {
-//             snapshot.map(doc => {
-//                 console.log(doc.data())
-//                 return doc.data()
-//             })
-//         })
-//     })
-// }
 
 //Use one time pull vs. listener to prevent UI from updating real time
 export const getListings = async () => {

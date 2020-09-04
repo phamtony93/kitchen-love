@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Login from './screens/Login';
 import Feed from './screens/Feed';
 import Profile from './screens/Profile';
@@ -16,11 +16,49 @@ import './App.scss';
 import { BrowserRouter as Router, Routes, Route, Switch } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import ProtectedRoute from './components/ProtectedRoute';
+import { auth, getAccessableRoutesFromRole, getUserRole } from './firebase';
+import { useStateProviderValue } from './StateProvider';
 
 function App() {
   let [authenticated, setAuthenticated] = useState(localStorage.getItem('authenticated') === "true" ? true : false);
   let [ role, setRole] = useState(localStorage.getItem('role') ? localStorage.getItem('role') : 'anonymous');
-  
+
+  const [{ user, userRole, accessableRoutes }, dispatch] = useStateProviderValue();
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
+      if (authUser) {
+        //logged in
+        dispatch({
+          type: 'SET_USER',
+          user: authUser
+        })
+
+        const role = await getUserRole(authUser.uid);
+        dispatch({
+          type: 'SET_ROLE',
+          userRole: role
+        })
+
+        const routes = await getAccessableRoutesFromRole(role);
+        dispatch(({
+          type: 'SET_ACCESSABLE_ROUTES',
+          accessableRoutes: routes
+        }))
+
+      } else {
+        //logged out
+        dispatch({
+          type: 'SET_USER',
+          user: null
+        })
+      }
+    })
+
+    return () => {
+      unsubscribe();
+    }
+  }, [])
+
   console.log('app is being rebuilt')
   return (
     <div className="App">

@@ -33,7 +33,7 @@ const reducer = (state, action) => {
         case 'SET_ROLE':
             return {
                 ...state,
-                role: action.role
+                userRole: action.userRole
             }
         default:
             return state
