@@ -1,15 +1,15 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
-const OrderTable = (props) => {
+const OrderTable = ({order}) => {
     // console.log('3')
     // console.log(props)
     return (
         <Container>
             <Row>
-                <Col>{props.order.orderDate}</Col>
+                <Col>{order.orderDate}</Col>
                 <Col>Total</Col>
-                <Col>Order id {props.order.id}</Col>
+                <Col>Order id {order.id}</Col>
             </Row>
         </Container>
     )

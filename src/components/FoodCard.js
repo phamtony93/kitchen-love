@@ -3,16 +3,16 @@ import { Card, CardImg } from 'react-bootstrap'
 
 const NOT_AVAIALABLE = '../assets/not_available';
 
-const FoodCard = (props) => {
+const FoodCard = ({handleShowConfirmation, setItemIdToConfirm, listing}) => {
     const {
         description = 'Not Available',
         id=null,
         name='Not Available',
-        imageUrl=NOT_AVAIALABLE} = props.listing   
+        imageUrl=NOT_AVAIALABLE} = listing   
 
     const showConfirmation = (id) => {
-        props.handleShowConfirmation();
-        props.setItemIdToConfirm(id);
+        handleShowConfirmation();
+        setItemIdToConfirm(id);
     }
 
     return (

@@ -1,0 +1,6 @@
+.subtotal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin: 20px 0;
+}

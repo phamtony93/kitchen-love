@@ -3,6 +3,11 @@ import { Navbar, Nav, NavLink, NavbarBrand, NavDropdown, Form, FormControl } fro
 import { Link } from 'react-router-dom';
 import { logout } from '../firebase'
 import { useStateProviderValue } from '../StateProvider';
+import ProfileIcon from '@material-ui/icons/AccountCircle'
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import LoginIcon from '@material-ui/icons/PersonAdd';
+import LogoutIcon from '@material-ui/icons/ExitToApp';
+import HistoryIcon from '@material-ui/icons/History';
 
 const MainNavBar = (props) => {
     const [{ user, accessableRoutes }] = useStateProviderValue();
@@ -32,12 +37,12 @@ const MainNavBar = (props) => {
                     <NavDropdown className="text-info" left title={
                             <span className="text-info">Account</span>
                     }>
-                        {isAuthenticated && checkUserAccessableRoutes('profile') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/profile'>Profile</NavLink></NavDropdown.Item> : null}
-                        {isAuthenticated && checkUserAccessableRoutes('cart') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/cart'>Cart</NavLink></NavDropdown.Item> : null}
-                        {isAuthenticated && checkUserAccessableRoutes('order-history') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/order-history'>Order History</NavLink></NavDropdown.Item> : null}
+                        {isAuthenticated && checkUserAccessableRoutes('profile') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/profile'><ProfileIcon /></NavLink></NavDropdown.Item> : null}
+                        {isAuthenticated && checkUserAccessableRoutes('cart') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/cart'><ShoppingCartIcon /></NavLink></NavDropdown.Item> : null}
+                        {isAuthenticated && checkUserAccessableRoutes('order-history') ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/order-history'><HistoryIcon /></NavLink></NavDropdown.Item> : null}
                         {isAuthenticated
-                            ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/' onClick={() => logout()}>Logout</NavLink></NavDropdown.Item> 
-                            : <NavDropdown.Item><NavLink className="text-info" as={Link} to="/login">Login</NavLink></NavDropdown.Item>}
+                            ? <NavDropdown.Item><NavLink className="text-info" as={Link} to='/' onClick={() => logout()}><LogoutIcon /></NavLink></NavDropdown.Item> 
+                            : <NavDropdown.Item><NavLink className="text-info" as={Link} to="/login"><LoginIcon /></NavLink></NavDropdown.Item>}
                     </NavDropdown>
                 </Nav>
             </Navbar.Collapse>

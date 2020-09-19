@@ -1,0 +1,28 @@
+.checkoutProduct {
+  display: flex;
+  align-items: center;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid black;
+  height: 200px;
+}
+
+.checkoutProduct__image {
+  object-fit: contain;
+  width: 180px;
+}
+
+.checkoutProduct__left {
+  margin-left: 20px;
+}
+
+.checkoutProduct__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 20px;
+}
+
+.checkoutProduct__removeButton {
+  margin-top: 10px;
+  background-color: #ffdd9d;
+}
