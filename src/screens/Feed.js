@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
 import { getListings } from "../firebase";
-import FoodCard from "../components/FoodCard";
-import ItemConfirmation from "../components/ItemConfirmation";
+import FoodCard from "../components/FoodCard/FoodCard";
+import ItemConfirmation from "../components/ItemConfirmation/ItemConfirmation";
 import { useStateProviderValue } from "../StateProvider";
 
 const Feed = () => {

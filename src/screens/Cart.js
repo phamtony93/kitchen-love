@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Table, Image, Button, Alert } from "react-bootstrap";
 import { createOrder } from "../firebase";
 import OrderConfirmation from "../components/OrderConfirmation";
 import CheckoutProduct from "../components/CheckoutProduct/CheckoutProduct";
@@ -11,29 +10,6 @@ const TAX_RATE = 0.0875;
 const Cart = () => {
   const [{ cart }, dispatch] = useStateProviderValue();
   let [orderSubmitted, setOrderSubmitted] = useState(false);
-
-  const isEmptyCart = localStorage.getItem("cart") === "null" ? true : false;
-
-  //Use table for now, create custom component for better visuals
-  const convertToTableRow = (cart) => {
-    if (cart === null) return null;
-    return cart.map((item) => {
-      return (
-        <tr>
-          <td>
-            <Image
-              src={item.details.imageUrl}
-              rounded
-              style={{ width: "30%", height: "auto" }}
-            />
-          </td>
-          <td>{item.details.name}</td>
-          <td>{item.quantity}</td>
-          <td>{item.quantity * item.details.price}</td>
-        </tr>
-      );
-    });
-  };
 
   const calculateSubtotal = (cart) => {
     if (cart === null) return 0;
@@ -70,33 +46,16 @@ const Cart = () => {
       <div className="cart__items">
         {cart.length === 0 ? (
           <h2>Your cart is empty. Add some food to your cart and stomache..</h2>
-        ) : null}
+        ) : (
+          <h2>Review your cart</h2>
+        )}
         {cart?.map((item) => (
           <CheckoutProduct details={item} />
         ))}
       </div>
       <div className="cart__subtotal">
-        <Subtotal />
+        {cart.length === 0 ? null : <Subtotal />}
       </div>
-
-      {/* <Table>
-                    <thead>
-                        <tr>
-                            <td></td>
-                            <td>Item</td>
-                            <td>Quantity</td>
-                            <td>Price</td>
-                        </tr>
-                    </thead>
-                    {convertToTableRow(cart)}
-                </Table>
-                <div className="justify-contents-end">
-                    <h4>Subtotal {subTotal}</h4><br/>
-                    <h4>Taxes {taxes}</h4><br/>
-                    <h4>Total {total}</h4>
-                </div>
-                <Button onClick={() => submitOrder()}>Submit Order</Button>
-                <OrderConfirmation orderSubmitted={orderSubmitted} confirmationId={'123'}/> */}
     </div>
   );
 };

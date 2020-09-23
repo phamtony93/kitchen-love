@@ -2,6 +2,7 @@ import React from "react";
 import "./Subtotal.css";
 import { getCartTotal } from "../../reducer";
 import { useStateProviderValue } from "../../StateProvider";
+import CurrencyFormat from "react-currency-format";
 
 const TAX_RATE = 0.875;
 
@@ -13,15 +14,31 @@ function Subtotal() {
     <div className="subtotal">
       <span>
         <strong>Subtotal: </strong>
-        {subtotal}{" "}
+        <CurrencyFormat
+          value={subtotal}
+          decimalScale={2}
+          prefix={"$"}
+          displayType="text"
+        />
       </span>
       <span>
-        <stron>Taxes: </stron>
-        {taxes}
+        <strong>Taxes: </strong>
+        <CurrencyFormat
+          value={taxes}
+          decimalScale={2}
+          prefix={"$"}
+          displayType="text"
+        />
       </span>
       <span>
-        <stron>Total: </stron>
-        {subtotal + taxes}
+        <strong>Total: </strong>
+        <CurrencyFormat
+          value={subtotal + taxes}
+          decimalScale={2}
+          fixedDecimalScale={true}
+          prefix={"$"}
+          displayType="text"
+        />
       </span>
     </div>
   );

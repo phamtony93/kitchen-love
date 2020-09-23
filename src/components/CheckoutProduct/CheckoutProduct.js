@@ -1,6 +1,7 @@
 import React from "react";
 import "./CheckoutProduct.css";
 import { useStateProviderValue } from "../../StateProvider";
+import CurrencyFormat from "react-currency-format";
 
 function CheckoutProduct({ details }) {
   const [{ cart }, dispatch] = useStateProviderValue();
@@ -21,12 +22,19 @@ function CheckoutProduct({ details }) {
       <div className="checkoutProduct__right">
         <div className="checkoutProduct__infoItemName">
           <span>
-            <strong>Item:</strong> {details.name}
+            <strong>Item:</strong> {details.item}
           </span>
         </div>
         <div className="checkoutProduct__infoPrice">
           <span>
-            <strong>Price:</strong> {details.price}
+            <strong>Price:</strong>{" "}
+            <CurrencyFormat
+              displayType={"text"}
+              value={details.price}
+              prefix={"$"}
+              decimalScale={2}
+              fixedDecimalScale={true}
+            />
           </span>
         </div>
         <div className="checkoutProduct__infoQuantity">

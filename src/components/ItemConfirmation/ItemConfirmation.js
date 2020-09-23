@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import "./ItemConfirmation.css";
 import { Modal, Button, Image } from "react-bootstrap";
-import { useStateProviderValue } from "../StateProvider";
+import { useStateProviderValue } from "../../StateProvider";
+import CurrencyFormat from "react-currency-format";
 
 const NOT_AVAILABLE = "../assets/not_available";
 const ItemConfirmation = ({
@@ -54,7 +56,7 @@ const ItemConfirmation = ({
     <Modal show={showConfirmation} onHide={() => handleCloseConfirmation()}>
       <Modal.Header closeButton>
         <Modal.Title>
-          <Image src={imageUrl} fluid />
+          <Image src={imageUrl} fluid className="itemConfirmation__image" />
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>{description}</Modal.Body>
@@ -71,7 +73,14 @@ const ItemConfirmation = ({
           +
         </Button>
         <Button variant="dark" onClick={() => addToCart()}>
-          Add {quantity} to Cart ${price * quantity}
+          Add {quantity} to Cart{" "}
+          <CurrencyFormat
+            value={price * quantity}
+            decimalScale={2}
+            fixedDecimalScale={true}
+            prefix={"$"}
+            displayType={"text"}
+          />
         </Button>
       </Modal.Footer>
     </Modal>
