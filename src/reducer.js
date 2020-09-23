@@ -39,8 +39,6 @@ const reducer = (state, action) => {
           item.skuId === action.skuId && item.quantity === action.quantity
       );
       let newCart = [...state.cart];
-      console.log("index is >>>>>", index);
-      //   console.log(index);
       if (index >= 0) {
         newCart.splice(index, 1);
       }

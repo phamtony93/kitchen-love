@@ -10,6 +10,7 @@ function Subtotal() {
   const [{ cart }, dispatch] = useStateProviderValue();
   const subtotal = getCartTotal(cart);
   const taxes = subtotal * TAX_RATE;
+
   return (
     <div className="subtotal">
       <span>
