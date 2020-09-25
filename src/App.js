@@ -6,6 +6,7 @@ import ForbiddenAccess from "./screens/ForbiddenAccess";
 import NotFound from "./screens/NotFound";
 import About from "./screens/About";
 import Contact from "./screens/Contact";
+import Checkout from "./screens/Checkout/Checkout";
 import Cart from "./screens/Cart";
 import OrderHistory from "./screens/OrderHistory";
 import MainNavBar from "./components/MainNavBar";
@@ -23,6 +24,12 @@ import { Layout } from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { auth, getAccessableRoutesFromRole, getUserRole } from "./firebase";
 import { useStateProviderValue } from "./StateProvider";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+
+const promise = loadStripe(
+  "pk_test_51HRtvKL0MubunR6nOpOJU3tgVMP2kNGQDJRG3lMmR38iBEkkFjELinxpK6nsXvAEeViPhBo4N9BoFz0T4MQHMrmX002C9WucMh"
+);
 
 function App() {
   // use localstorage to persist on refresh
@@ -37,6 +44,7 @@ function App() {
     { user, userRole, accessableRoutes },
     dispatch,
   ] = useStateProviderValue();
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
@@ -101,6 +109,11 @@ function App() {
             <Route path="/contact" component={Contact} />
             <ProtectedRoute path="/order-history" component={OrderHistory} />
             <ProtectedRoute path="/profile" component={Profile} />
+            <ProtectedRoute path="/checkout">
+              <Elements stripe={promise}>
+                <Checkout />
+              </Elements>
+            </ProtectedRoute>
             <ProtectedRoute path="/cart" component={Cart} />
             <Route path="/403" component={ForbiddenAccess} />
             <Route component={NotFound} />

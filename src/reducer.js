@@ -1,7 +1,16 @@
 export const initialState = {
   authorized: false,
   user: null,
-  cart: [],
+  cart: [
+    {
+      item: "Iberria Tacos",
+      price: 12.0,
+      description: "tasty tacos",
+      imageUrl:
+        "https://firebasestorage.googleapis.com/v0/b/kitchen-love-37aba.appspot.com/o/Tacos-El-Patron-quesabirria-e1575675759948.jpg?alt=media&token=fd28ae84-ecf5-4485-a76f-3da280dae362",
+      quantity: 2,
+    },
+  ],
   accessableRoutes: null,
   role: null,
 };
@@ -45,6 +54,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         cart: newCart,
+      };
+    case "EMPTY_CART":
+      return {
+        ...state,
+        cart: [],
       };
     case "SET_ACCESSABLE_ROUTES":
       return {

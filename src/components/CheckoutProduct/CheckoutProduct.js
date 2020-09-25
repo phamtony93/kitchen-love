@@ -3,7 +3,7 @@ import "./CheckoutProduct.css";
 import { useStateProviderValue } from "../../StateProvider";
 import CurrencyFormat from "react-currency-format";
 
-function CheckoutProduct({ details }) {
+function CheckoutProduct({ details }, hideButton) {
   const [{ cart }, dispatch] = useStateProviderValue();
 
   const removeFromCart = () => {
@@ -42,12 +42,14 @@ function CheckoutProduct({ details }) {
             <strong>Quantity:</strong> {details.quantity}
           </span>
         </div>
-        <button
-          className="checkoutProduct__removeButton"
-          onClick={removeFromCart}
-        >
-          Remove From Cart
-        </button>
+        {!hideButton && (
+          <button
+            className="checkoutProduct__removeButton"
+            onClick={removeFromCart}
+          >
+            Remove From Cart
+          </button>
+        )}
       </div>
     </div>
   );

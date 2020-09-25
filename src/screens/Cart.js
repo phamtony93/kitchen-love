@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { createOrder } from "../firebase";
+import { Link } from "react-router-dom";
 import OrderConfirmation from "../components/OrderConfirmation";
 import CheckoutProduct from "../components/CheckoutProduct/CheckoutProduct";
 import { useStateProviderValue } from "../StateProvider";
@@ -53,9 +54,14 @@ const Cart = () => {
           <CheckoutProduct details={item} />
         ))}
       </div>
-      <div className="cart__subtotal">
-        {cart.length === 0 ? null : <Subtotal />}
-      </div>
+      {cart.length === 0 ? null : (
+        <div className="cart__subtotal">
+          <Subtotal />
+          <Link to="/checkout">
+            <button>Proceed to Checkout</button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
