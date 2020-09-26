@@ -50,8 +50,6 @@ const ItemConfirmation = ({
     handleCloseConfirmation();
   };
 
-  console.log("details >>>>>", details);
-
   return (
     <Modal show={showConfirmation} onHide={() => handleCloseConfirmation()}>
       <Modal.Header closeButton>

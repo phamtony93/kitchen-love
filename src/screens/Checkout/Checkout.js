@@ -26,7 +26,6 @@ const Checkout = () => {
         total: getCartTotal(cart) * 100,
       })
       .then((response) => {
-        console.log("res >>>>>>", response.data);
         setClientSecret(response.data.clientSecret);
       })
       .catch((e) => {
@@ -55,7 +54,6 @@ const Checkout = () => {
       setError(`Payment failed ${payload.error.message}`);
     } else {
       const { paymentIntent } = payload;
-      console.log("payload >>>>>>", payload);
       // log to firebase
       createOrder({
         // optional chaining as a safety measure

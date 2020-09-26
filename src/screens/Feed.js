@@ -52,9 +52,6 @@ const Feed = () => {
     foodCardsRows.push(listingsToFoodCards.slice(i, lastRowCheck));
   }
 
-  //cart?
-  console.log("in cart >>>>>", cart);
-  console.log("listings >>>>>", listings);
   return (
     <div>
       <Table bordered={false} id="listing-table">

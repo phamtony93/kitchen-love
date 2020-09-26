@@ -8,7 +8,7 @@ import About from "./screens/About";
 import Contact from "./screens/Contact";
 import Checkout from "./screens/Checkout/Checkout";
 import Cart from "./screens/Cart";
-import OrderHistory from "./screens/OrderHistory";
+import OrderHistory from "./screens/OrderHistory/OrderHistory";
 import MainNavBar from "./components/MainNavBar";
 import Jumbotron from "./components/Jumbotron";
 import "./components/Layout";

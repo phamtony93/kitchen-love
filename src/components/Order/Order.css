@@ -1,0 +1,18 @@
+.order {
+  display: flex;
+  justify-content: center;
+  margin: 30px;
+  /* flex: 1; */
+}
+
+.order__info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: 30px;
+  flex: 0.25;
+}
+
+.order__items {
+  flex: 0.75;
+}
