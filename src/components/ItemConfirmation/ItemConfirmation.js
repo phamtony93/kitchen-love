@@ -50,8 +50,13 @@ const ItemConfirmation = ({
     handleCloseConfirmation();
   };
 
+  const resetAndCloseConfirmation = () => {
+    setQuantity(1);
+    handleCloseConfirmation();
+  };
+
   return (
-    <Modal show={showConfirmation} onHide={() => handleCloseConfirmation()}>
+    <Modal show={showConfirmation} onHide={() => resetAndCloseConfirmation()}>
       <Modal.Header closeButton>
         <Modal.Title>
           <Image src={imageUrl} fluid className="itemConfirmation__image" />
