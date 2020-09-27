@@ -118,3 +118,18 @@ export const getOrderHistory = async (uid) => {
     });
   return orderHistory;
 };
+
+export const getStoreInventory = async (uid) => {
+  let inventory = await firestore
+    .collection("listings")
+    .where("vendorId", "==", uid)
+    .onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        console.log(doc.data());
+        return doc.data();
+      });
+    });
+  console.log("1");
+  console.log(inventory);
+  return inventory;
+};

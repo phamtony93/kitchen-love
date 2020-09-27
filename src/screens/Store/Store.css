@@ -1,0 +1,13 @@
+.store__inventoryImage {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  margin: 0;
+}

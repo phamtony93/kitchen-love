@@ -25,7 +25,7 @@ export const getCartTotal = (cart) => {
 
 const reducer = (state, action) => {
   //Help with debugging
-  console.log(action);
+  // console.log(action);
   switch (action.type) {
     case "SET_AUTHORIZED":
       return {

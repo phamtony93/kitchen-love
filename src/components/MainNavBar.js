@@ -16,12 +16,14 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import LoginIcon from "@material-ui/icons/PersonAdd";
 import LogoutIcon from "@material-ui/icons/ExitToApp";
 import HistoryIcon from "@material-ui/icons/History";
+import StorefrontIcon from "@material-ui/icons/Storefront";
 import { Tooltip } from "@material-ui/core";
 
 const MainNavBar = (props) => {
   const [{ user, accessableRoutes }] = useStateProviderValue();
   const isAuthenticated = user ? true : false;
 
+  //change to optional chaining
   const checkUserAccessableRoutes = (route) => {
     if (accessableRoutes === null) return false;
     if (accessableRoutes.includes(route)) {
@@ -83,6 +85,15 @@ const MainNavBar = (props) => {
                 <NavLink className="text-info" as={Link} to="/order-history">
                   <Tooltip title="Order History">
                     <HistoryIcon />
+                  </Tooltip>
+                </NavLink>
+              </NavDropdown.Item>
+            ) : null}
+            {isAuthenticated && checkUserAccessableRoutes("store") ? (
+              <NavDropdown.Item>
+                <NavLink className="text-info" as={Link} to="/store">
+                  <Tooltip title="Store">
+                    <StorefrontIcon />
                   </Tooltip>
                 </NavLink>
               </NavDropdown.Item>

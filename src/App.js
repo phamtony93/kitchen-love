@@ -11,6 +11,7 @@ import Cart from "./screens/Cart";
 import OrderHistory from "./screens/OrderHistory/OrderHistory";
 import MainNavBar from "./components/MainNavBar";
 import Jumbotron from "./components/Jumbotron";
+import Store from "./screens/Store/Store";
 import "./components/Layout";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.scss";
@@ -79,7 +80,6 @@ function App() {
     };
   }, []);
 
-  console.log("app is being rebuilt");
   return (
     <div className="App">
       <Router>
@@ -109,6 +109,7 @@ function App() {
             <Route path="/contact" component={Contact} />
             <ProtectedRoute path="/order-history" component={OrderHistory} />
             <ProtectedRoute path="/profile" component={Profile} />
+            <Route path="/store" component={Store} />
             <ProtectedRoute path="/checkout">
               <Elements stripe={promise}>
                 <Checkout />
