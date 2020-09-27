@@ -39,7 +39,12 @@ const Store = () => {
         .collection("listings")
         .where("vendorId", "==", user.uid)
         .onSnapshot((querySnapshot) => {
-          setInventory(querySnapshot.docs.map((doc) => doc.data()));
+          setInventory(
+            querySnapshot.docs.map((doc) => ({
+              id: doc.id,
+              data: doc.data(),
+            }))
+          );
         });
     }
   }, [user]);
@@ -62,7 +67,7 @@ const Store = () => {
   };
 
   const TableBody = ({ data }) => {
-    // console.log(data.length);
+    console.log(data);
     if (data.length) {
       return (
         <tbody>
@@ -70,18 +75,18 @@ const Store = () => {
             // console.log(row);
             return (
               <tr>
-                <td>{row.skuId}</td>
+                <td>{row.id}</td>
                 <td>
                   <img
-                    src={row.imageUrl}
+                    src={row.data.imageUrl}
                     alt=""
                     className="store__inventoryImage"
                   ></img>
                 </td>
-                <td>{row.name}</td>
-                <td>{row.description}</td>
-                <td>{row.type}</td>
-                <td>{row.quantity}</td>
+                <td>{row.data.name}</td>
+                <td>{row.data.description}</td>
+                <td>{row.data.type}</td>
+                <td>{row.data.quantity}</td>
                 <td># ordered</td>
                 <td>income</td>
               </tr>
