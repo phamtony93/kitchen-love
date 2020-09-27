@@ -119,8 +119,8 @@ export const getOrderHistory = async (uid) => {
   return orderHistory;
 };
 
-export const getStoreInventory = async (uid) => {
-  let inventory = await firestore
+export const getStoreInventory = (uid) => {
+  let inventory = firestore
     .collection("listings")
     .where("vendorId", "==", uid)
     .onSnapshot((snapshot) => {
@@ -129,7 +129,10 @@ export const getStoreInventory = async (uid) => {
         return doc.data();
       });
     });
+
   console.log("1");
   console.log(inventory);
   return inventory;
 };
+
+// const export uploadImageToStorageAndReturnUrl

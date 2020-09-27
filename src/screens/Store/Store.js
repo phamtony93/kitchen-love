@@ -3,24 +3,35 @@ import "./Store.css";
 import { Table, Modal, Form, Button } from "react-bootstrap";
 import { firestore, getStoreInventory } from "../../firebase";
 import { useStateProviderValue } from "../../StateProvider";
+import firebase from "firebase";
+
+const NO_IMAGE = "";
 
 const Store = () => {
+  const [{ user }, dispatch] = useStateProviderValue();
   const [inventory, setInventory] = useState([]);
   const [showUploadForm, setShowUploadForm] = useState(false);
-
-  const [{ user }, dispatch] = useStateProviderValue();
+  const [formData, setFormData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    quantity: "",
+    type: "",
+    category: "",
+    image: null,
+  });
 
   //   ------- figure out why this approach doesn't work -------------
-  //   useEffect(() => {
-  //     const loadInventory = async () => {
-  //       const temp = await getStoreInventory(user.uid);
-  //       console.log(temp);
-  //     };
+  // useEffect(() => {
+  //   const loadInventory = async () => {
+  //     const temp = await getStoreInventory(user.uid);
+  //     console.log(temp);
+  //   };
 
-  //     if (user) {
-  //       loadInventory();
-  //     }
-  //   }, [user]);
+  //   if (user) {
+  //     loadInventory();
+  //   }
+  // }, [user]);
 
   useEffect(() => {
     if (user) {
@@ -41,6 +52,7 @@ const Store = () => {
           <th>Image</th>
           <th>Name</th>
           <th>Description</th>
+          <th>Type</th>
           <th>Quantity Available</th>
           <th>Quantity Ordered</th>
           <th>Income</th>
@@ -49,33 +61,34 @@ const Store = () => {
     );
   };
 
-  //   console.log("being built");
-  console.log(inventory);
-
   const TableBody = ({ data }) => {
     // console.log(data.length);
-    console.log(data);
     if (data.length) {
-      return data.map((row) => {
-        // console.log(row);
-        return (
-          <tr>
-            <td>{row.skuId}</td>
-            <td>
-              <img
-                src={row.imageUrl}
-                alt=""
-                className="store__inventoryImage"
-              ></img>
-            </td>
-            <td>{row.name}</td>
-            <td>{row.description}</td>
-            <td>{row.quantity}</td>
-            <td># ordered</td>
-            <td>income</td>
-          </tr>
-        );
-      });
+      return (
+        <tbody>
+          {data.map((row) => {
+            // console.log(row);
+            return (
+              <tr>
+                <td>{row.skuId}</td>
+                <td>
+                  <img
+                    src={row.imageUrl}
+                    alt=""
+                    className="store__inventoryImage"
+                  ></img>
+                </td>
+                <td>{row.name}</td>
+                <td>{row.description}</td>
+                <td>{row.type}</td>
+                <td>{row.quantity}</td>
+                <td># ordered</td>
+                <td>income</td>
+              </tr>
+            );
+          })}
+        </tbody>
+      );
     } else {
       return null;
     }
@@ -89,11 +102,60 @@ const Store = () => {
     setShowUploadForm(false);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    //upload to firebase
+    //upload to firebase, console.log for now
+    console.log(formData);
+    //attempt to load image to firebase storage and retrieve url
+    const storageRef = firebase.storage().ref();
+    // use unique key of image name-uid-timestamp
+    const imageRef = storageRef.child(
+      `${formData?.image?.name}-${user?.uid}-${Date.now()}`
+    );
+
+    await imageRef.put(formData.image).then(() => {
+      imageRef.getDownloadURL().then((url) => {
+        firestore.collection("listings").add({
+          name: formData.name,
+          description: formData.description,
+          price: parseFloat(formData.price),
+          quantity: parseFloat(formData.quantity),
+          type: formData.type,
+          category: formData.category,
+          imageUrl: url,
+          vendorId: user?.uid,
+        });
+      });
+    });
+
+    //clear form state
+    setFormData({
+      name: "",
+      description: "",
+      price: "",
+      quantity: "",
+      image: null,
+    });
+
     setShowUploadForm(false);
   };
+
+  const handleChange = (e) => {
+    console.log(e.target);
+    if (e.target.files) {
+      setFormData({
+        ...formData,
+        image: e.target.files[0],
+      });
+      console.log(e.target.files[0]);
+    } else {
+      setFormData({
+        ...formData,
+        [e.target.name]: e.target.value,
+      });
+    }
+  };
+
   return (
     <div className="store">
       <div className="store__inventory">
@@ -110,23 +172,66 @@ const Store = () => {
             <Form>
               <Form.Group>
                 <Form.Label>Name</Form.Label>
-                <Form.Control type="text"></Form.Control>
+                <Form.Control
+                  type="text"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                ></Form.Control>
               </Form.Group>
               <Form.Group>
                 <Form.Label>Description</Form.Label>
-                <Form.Control type="text"></Form.Control>
+                <Form.Control
+                  type="text"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                ></Form.Control>
               </Form.Group>
               <Form.Group>
                 <Form.Label>Quantity</Form.Label>
-                <Form.Control type="number"></Form.Control>
+                <Form.Control
+                  type="number"
+                  name="quantity"
+                  value={formData.quantity}
+                  onChange={handleChange}
+                ></Form.Control>
               </Form.Group>
               <Form.Group>
                 <Form.Label>Price</Form.Label>
-                <Form.Control type="numer"></Form.Control>
+                <Form.Control
+                  type="number"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Type</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                ></Form.Control>
+              </Form.Group>
+              <Form.Group>
+                <Form.Label>Category</Form.Label>
+                <Form.Control
+                  type="text"
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                ></Form.Control>
               </Form.Group>
               <Form.Group>
                 <Form.Label>image</Form.Label>
-                <Form.Control type="file"></Form.Control>
+                <Form.Control
+                  type="file"
+                  name="image"
+                  //   value={formData.image}
+                  onChange={handleChange}
+                ></Form.Control>
               </Form.Group>
               <Button type="submit" onClick={handleSubmit}>
                 Submit
