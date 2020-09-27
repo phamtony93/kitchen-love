@@ -25,7 +25,7 @@ const Order = ({ orderDetails: { id, amount, order, orderDate } }) => {
           />
         </span>
         <span>
-          <strong>ID: </strong>
+          <strong>Id: </strong>
           {id}
         </span>
       </div>

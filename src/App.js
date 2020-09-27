@@ -109,7 +109,7 @@ function App() {
             <Route path="/contact" component={Contact} />
             <ProtectedRoute path="/order-history" component={OrderHistory} />
             <ProtectedRoute path="/profile" component={Profile} />
-            <Route path="/store" component={Store} />
+            <ProtectedRoute path="/store" component={Store} />
             <ProtectedRoute path="/checkout">
               <Elements stripe={promise}>
                 <Checkout />
