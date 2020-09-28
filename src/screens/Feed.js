@@ -64,8 +64,8 @@ const Feed = () => {
         </tbody>
       </Table>
       <div>
-        <NavigateNextIcon />
         <NavigateBeforeIcon />
+        <NavigateNextIcon />
       </div>
       <ItemConfirmation
         showConfirmation={showConfirmation}

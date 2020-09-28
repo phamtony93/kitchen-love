@@ -27,7 +27,7 @@ const Store = () => {
 
   useEffect(() => {
     if (user) {
-      getStoreInventory2(user?.uid, setInventory);
+      const unsubscribe = getStoreInventory2(user?.uid, setInventory);
       //   const getInventory = async () => {
       //     const data = await getStoreInventory(user?.uid);
       //     console.log("2");
@@ -36,6 +36,7 @@ const Store = () => {
       //   };
 
       //   getInventory();
+      return unsubscribe;
     }
   }, [user]);
 

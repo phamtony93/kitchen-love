@@ -142,7 +142,7 @@ export const getStoreInventory = async (uid) => {
 };
 
 export const getStoreInventory2 = (uid, setInventory) => {
-  firestore
+  const unsubscribe = firestore
     .collection("listings")
     .where("vendorId", "==", uid)
     .onSnapshot((snapshot) => {
@@ -155,5 +155,8 @@ export const getStoreInventory2 = (uid, setInventory) => {
         })
       );
     });
+
+  return unsubscribe;
 };
+
 // const export uploadImageToStorageAndReturnUrl
