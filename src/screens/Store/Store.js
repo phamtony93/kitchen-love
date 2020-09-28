@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from "react";
 import "./Store.css";
 import { Table, Modal, Form, Button } from "react-bootstrap";
-import { firestore, getStoreInventory } from "../../firebase";
+import {
+  firestore,
+  getStoreInventory,
+  getStoreInventory2,
+} from "../../firebase";
 import { useStateProviderValue } from "../../StateProvider";
 import firebase from "firebase";
 
@@ -21,31 +25,17 @@ const Store = () => {
     image: null,
   });
 
-  //   ------- figure out why this approach doesn't work -------------
-  // useEffect(() => {
-  //   const loadInventory = async () => {
-  //     const temp = await getStoreInventory(user.uid);
-  //     console.log(temp);
-  //   };
-
-  //   if (user) {
-  //     loadInventory();
-  //   }
-  // }, [user]);
-
   useEffect(() => {
     if (user) {
-      firestore
-        .collection("listings")
-        .where("vendorId", "==", user.uid)
-        .onSnapshot((querySnapshot) => {
-          setInventory(
-            querySnapshot.docs.map((doc) => ({
-              id: doc.id,
-              data: doc.data(),
-            }))
-          );
-        });
+      getStoreInventory2(user?.uid, setInventory);
+      //   const getInventory = async () => {
+      //     const data = await getStoreInventory(user?.uid);
+      //     console.log("2");
+      //     console.log(data);
+      //     setInventory(data);
+      //   };
+
+      //   getInventory();
     }
   }, [user]);
 
@@ -67,6 +57,7 @@ const Store = () => {
   };
 
   const TableBody = ({ data }) => {
+    console.log("1");
     console.log(data);
     if (data.length) {
       return (
@@ -75,18 +66,18 @@ const Store = () => {
             // console.log(row);
             return (
               <tr>
-                <td>{row.id}</td>
+                <td>{row.skuId}</td>
                 <td>
                   <img
-                    src={row.data.imageUrl}
+                    src={row.imageUrl}
                     alt=""
                     className="store__inventoryImage"
                   ></img>
                 </td>
-                <td>{row.data.name}</td>
-                <td>{row.data.description}</td>
-                <td>{row.data.type}</td>
-                <td>{row.data.quantity}</td>
+                <td>{row.name}</td>
+                <td>{row.description}</td>
+                <td>{row.type}</td>
+                <td>{row.quantity}</td>
                 <td># ordered</td>
                 <td>income</td>
               </tr>

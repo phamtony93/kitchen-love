@@ -3,6 +3,8 @@ import { Table } from "react-bootstrap";
 import { getListings } from "../firebase";
 import FoodCard from "../components/FoodCard/FoodCard";
 import ItemConfirmation from "../components/ItemConfirmation/ItemConfirmation";
+import NavigateNextIcon from "@material-ui/icons/NavigateNext";
+import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
 import { useStateProviderValue } from "../StateProvider";
 
 const Feed = () => {
@@ -61,6 +63,10 @@ const Feed = () => {
             : "Finding tasty meals.."}
         </tbody>
       </Table>
+      <div>
+        <NavigateNextIcon />
+        <NavigateBeforeIcon />
+      </div>
       <ItemConfirmation
         showConfirmation={showConfirmation}
         handleCloseConfirmation={handleCloseConfirmation}

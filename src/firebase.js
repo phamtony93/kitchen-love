@@ -87,7 +87,11 @@ export const getAccessableRoutesFromRole = (role) => {
 
 //Use one time pull vs. listener to prevent UI from updating real time
 export const getListings = async () => {
-  const snapshot = await firestore.collection("listings").get();
+  const snapshot = await firestore
+    .collection("listings")
+    .limit(3)
+    .orderBy("name")
+    .get();
   return snapshot.docs.map((doc) => {
     let data = doc.data();
     data.id = doc.id;
@@ -119,20 +123,37 @@ export const getOrderHistory = async (uid) => {
   return orderHistory;
 };
 
-export const getStoreInventory = (uid) => {
-  let inventory = firestore
+//break long functions into logical smaller/readable steps
+export const getStoreInventory = async (uid) => {
+  const inventorySnapshot = await firestore
+    .collection("listings")
+    .where("vendorId", "==", uid)
+    .get();
+
+  //add skuID to the object by spreading the returned data and adding sku
+  const dataDocs = inventorySnapshot.docs;
+  const data = dataDocs.map((doc) => ({
+    ...doc.data(),
+    skuId: doc.id,
+  }));
+
+  //   -------------
+  return data;
+};
+
+export const getStoreInventory2 = (uid, setInventory) => {
+  firestore
     .collection("listings")
     .where("vendorId", "==", uid)
     .onSnapshot((snapshot) => {
-      snapshot.docs.map((doc) => {
-        console.log(doc.data());
-        return doc.data();
-      });
+      setInventory(
+        snapshot.docs.map((doc) => {
+          return {
+            ...doc.data(),
+            skuId: doc.id,
+          };
+        })
+      );
     });
-
-  console.log("1");
-  console.log(inventory);
-  return inventory;
 };
-
 // const export uploadImageToStorageAndReturnUrl
