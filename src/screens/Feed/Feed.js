@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { getListings } from "../firebase";
-import FoodCard from "../components/FoodCard/FoodCard";
-import ItemConfirmation from "../components/ItemConfirmation/ItemConfirmation";
-import NavigateNextIcon from "@material-ui/icons/NavigateNext";
-import NavigateBeforeIcon from "@material-ui/icons/NavigateBefore";
-import { useStateProviderValue } from "../StateProvider";
+import { getListings } from "../../firebase";
+import FoodCard from "../../components/FoodCard/FoodCard";
+import ItemConfirmation from "../../components/ItemConfirmation/ItemConfirmation";
+import PaginationArrows from "../../components/PaginationArrows/PaginationArrows.js";
+import { useStateProviderValue } from "../../StateProvider";
+import "./Feed.css";
 
 const Feed = () => {
   const [{ listings, cart }, dispatch] = useStateProviderValue();
@@ -55,7 +55,7 @@ const Feed = () => {
   }
 
   return (
-    <div>
+    <div className="feed">
       <Table bordered={false} id="listing-table">
         <tbody>
           {listings
@@ -63,9 +63,8 @@ const Feed = () => {
             : "Finding tasty meals.."}
         </tbody>
       </Table>
-      <div>
-        <NavigateBeforeIcon />
-        <NavigateNextIcon />
+      <div className="feed__pagination">
+        <PaginationArrows />
       </div>
       <ItemConfirmation
         showConfirmation={showConfirmation}

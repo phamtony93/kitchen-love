@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Login from "./screens/Login";
-import Feed from "./screens/Feed";
+import Feed from "./screens/Feed/Feed";
 import Profile from "./screens/Profile";
 import ForbiddenAccess from "./screens/ForbiddenAccess";
 import NotFound from "./screens/NotFound";
 import About from "./screens/About";
 import Contact from "./screens/Contact";
 import Checkout from "./screens/Checkout/Checkout";
-import Cart from "./screens/Cart";
+import Cart from "./screens/Cart/Cart";
 import OrderHistory from "./screens/OrderHistory/OrderHistory";
 import MainNavBar from "./components/MainNavBar";
 import Jumbotron from "./components/Jumbotron";

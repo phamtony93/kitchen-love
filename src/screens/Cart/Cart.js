@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { createOrder } from "../firebase";
+import { createOrder } from "../../firebase";
 import { Link } from "react-router-dom";
-import OrderConfirmation from "../components/OrderConfirmation";
-import CheckoutProduct from "../components/CheckoutProduct/CheckoutProduct";
-import { useStateProviderValue } from "../StateProvider";
-import Subtotal from "../components/Subtotal/Subtotal";
+import OrderConfirmation from "../../components/OrderConfirmation";
+import CheckoutProduct from "../../components/CheckoutProduct/CheckoutProduct";
+import { useStateProviderValue } from "../../StateProvider";
+import Subtotal from "../../components/Subtotal/Subtotal";
+import "./Cart.css";
 
 const TAX_RATE = 0.0875;
 

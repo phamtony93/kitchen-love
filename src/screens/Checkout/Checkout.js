@@ -82,7 +82,7 @@ const Checkout = () => {
     <div className="checkout">
       <div className="checkout__section">
         <div className="checkout__sectionLeft">
-          <h3>Delivery Address</h3>
+          <h3>Address</h3>
         </div>
         <div className="checkout__sectionRight">
           <span>{user?.email}</span>

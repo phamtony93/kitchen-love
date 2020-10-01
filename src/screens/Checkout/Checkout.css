@@ -1,12 +1,16 @@
+.checkout {
+  height: 100vh;
+}
+
 .checkout__section {
   display: flex;
   border-bottom: 1px solid gray;
   padding: 20px;
-  /* align-items: center; */
 }
 
 .checkout__sectionLeft {
   display: flex;
+  align-items: flex-start;
   flex: 0.2;
 }
 

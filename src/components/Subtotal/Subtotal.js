@@ -18,6 +18,7 @@ function Subtotal() {
         <CurrencyFormat
           value={subtotal}
           decimalScale={2}
+          fixedDecimalScale={true}
           prefix={"$"}
           displayType="text"
         />
@@ -27,6 +28,7 @@ function Subtotal() {
         <CurrencyFormat
           value={taxes}
           decimalScale={2}
+          fixedDecimalScale={true}
           prefix={"$"}
           displayType="text"
         />
