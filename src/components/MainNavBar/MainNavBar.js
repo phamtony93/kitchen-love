@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Navbar,
   Nav,
@@ -8,9 +8,9 @@ import {
   Form,
   FormControl,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
-import { logout } from "../firebase";
-import { useStateProviderValue } from "../StateProvider";
+import { Link, useLocation, useHistory } from "react-router-dom";
+import { logout } from "../../firebase";
+import { useStateProviderValue } from "../../StateProvider";
 import ProfileIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import LoginIcon from "@material-ui/icons/PersonAdd";
@@ -20,7 +20,15 @@ import StorefrontIcon from "@material-ui/icons/Storefront";
 import { Tooltip } from "@material-ui/core";
 
 const MainNavBar = (props) => {
-  const [{ user, accessableRoutes }] = useStateProviderValue();
+  let location = useLocation();
+  let history = useHistory();
+
+  const [
+    { user, accessableRoutes, search },
+    dispatch,
+  ] = useStateProviderValue();
+  const [input, setInput] = useState("");
+
   const isAuthenticated = user ? true : false;
 
   //change to optional chaining
@@ -33,6 +41,26 @@ const MainNavBar = (props) => {
     }
   };
 
+  const handleChange = (e) => {
+    setInput(e.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Dispatch state
+    dispatch({
+      type: "SET_SEARCH",
+      search: input,
+    });
+
+    //redirect to / if not already there
+    if (location.path !== "/") {
+      history.push("/");
+    }
+  };
+
+  console.log(location);
   return (
     <Navbar className="bg-dark">
       <NavbarBrand className="text-info" as={Link} to="/">
@@ -40,11 +68,13 @@ const MainNavBar = (props) => {
       </NavbarBrand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse>
-        <Form className="inline mr-auto">
+        <Form className="inline mr-auto" onSubmit={handleSubmit}>
           <FormControl
             type="text"
             placeholder="Search kitchens"
             className="mr"
+            value={input}
+            onChange={handleChange}
           />
         </Form>
         <Nav>

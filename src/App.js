@@ -9,7 +9,7 @@ import Contact from "./screens/Contact";
 import Checkout from "./screens/Checkout/Checkout";
 import Cart from "./screens/Cart";
 import OrderHistory from "./screens/OrderHistory/OrderHistory";
-import MainNavBar from "./components/MainNavBar";
+import MainNavBar from "./components/MainNavBar/MainNavBar";
 import Jumbotron from "./components/Jumbotron";
 import Store from "./screens/Store/Store";
 import "./components/Layout";

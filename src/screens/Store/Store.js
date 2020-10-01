@@ -21,18 +21,6 @@ const Store = () => {
     image: null,
   });
 
-  //   ------- figure out why this approach doesn't work -------------
-  // useEffect(() => {
-  //   const loadInventory = async () => {
-  //     const temp = await getStoreInventory(user.uid);
-  //     console.log(temp);
-  //   };
-
-  //   if (user) {
-  //     loadInventory();
-  //   }
-  // }, [user]);
-
   useEffect(() => {
     if (user) {
       firestore

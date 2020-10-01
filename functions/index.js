@@ -34,12 +34,6 @@ app.post("/create-payment-intent", async (req, res) => {
   });
 });
 
-app.post("/test", (req, res) => {
-  const { param1 } = req.body;
-  console.log("2");
-  res.status(200).send("ok");
-});
-
 //listener
 exports.api = functions.https.onRequest(app);
 

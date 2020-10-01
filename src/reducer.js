@@ -13,6 +13,7 @@ export const initialState = {
   ],
   accessableRoutes: null,
   role: null,
+  search: "",
 };
 
 //Create cart total selector
@@ -74,6 +75,11 @@ const reducer = (state, action) => {
       return {
         ...state,
         listings: action.listings,
+      };
+    case "SET_SEARCH":
+      return {
+        ...state,
+        search: action.search,
       };
     default:
       return state;

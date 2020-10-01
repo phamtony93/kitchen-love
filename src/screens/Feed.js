@@ -6,7 +6,7 @@ import ItemConfirmation from "../components/ItemConfirmation/ItemConfirmation";
 import { useStateProviderValue } from "../StateProvider";
 
 const Feed = () => {
-  const [{ listings, cart }, dispatch] = useStateProviderValue();
+  const [{ listings, cart, search }, dispatch] = useStateProviderValue();
 
   let [showConfirmation, setShowConfirmation] = useState(false);
   let [itemIdToConfirm, setItemIdToConfirm] = useState(null);
@@ -25,6 +25,15 @@ const Feed = () => {
     });
   }, []);
 
+  let filteredListings = search
+    ? listings.filter((listing) => {
+        return (
+          listing.name.toLowerCase().indexOf(search.toLowerCase()) !== -1 ||
+          listing.description.toLowerCase().indexOf(search.toLowerCase()) !== -1
+        );
+      })
+    : listings;
+
   const getDetailsFromListings = (id) => {
     if (id === null) return null;
     return listings.find((obj) => obj.id === itemIdToConfirm);
@@ -32,7 +41,7 @@ const Feed = () => {
 
   //Convert array into array of td FoodCards
   let listingsToFoodCards = listings
-    ? listings.map((listing) => {
+    ? filteredListings.map((listing) => {
         return (
           <td key={listing.id}>
             <FoodCard
@@ -44,6 +53,7 @@ const Feed = () => {
         );
       })
     : [];
+
   let foodCardsRows = [];
 
   //Convert array of FoodCards into nested arrays for each row
@@ -56,7 +66,7 @@ const Feed = () => {
     <div>
       <Table bordered={false} id="listing-table">
         <tbody>
-          {listings
+          {filteredListings
             ? foodCardsRows.map((row) => <tr>{row}</tr>)
             : "Finding tasty meals.."}
         </tbody>
