@@ -54,6 +54,8 @@ const Feed = () => {
     foodCardsRows.push(listingsToFoodCards.slice(i, lastRowCheck));
   }
 
+  console.log("listings >>>>>>>>", listings);
+
   return (
     <div className="feed">
       <Table bordered={false} id="listing-table">

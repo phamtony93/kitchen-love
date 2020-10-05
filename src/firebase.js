@@ -89,8 +89,10 @@ export const getAccessableRoutesFromRole = (role) => {
 export const getListings = async () => {
   const snapshot = await firestore
     .collection("listings")
-    .limit(3)
-    .orderBy("name")
+    // firebase does not allow orderBy clause with where condition testing for equality. Will have to move this logic after pagination is implemented
+    .where("forSale", "==", true)
+    // .limit(3)
+    // .orderBy("name")
     .get();
   return snapshot.docs.map((doc) => {
     let data = doc.data();
@@ -159,4 +161,14 @@ export const getStoreInventory2 = (uid, setInventory) => {
   return unsubscribe;
 };
 
-// const export uploadImageToStorageAndReturnUrl
+export const delistItem = (skuId) => {
+  firestore.collection("listings").doc(skuId).update({
+    forSale: false,
+  });
+};
+
+export const relistItem = (skuId) => {
+  firestore.collection("listings").doc(skuId).update({
+    forSale: true,
+  });
+};

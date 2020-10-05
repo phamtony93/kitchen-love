@@ -5,7 +5,13 @@ import {
   firestore,
   getStoreInventory,
   getStoreInventory2,
+  delistItem,
+  relistItem,
 } from "../../firebase";
+import DeleteIcon from "@material-ui/icons/Delete";
+import RemoveIcon from "@material-ui/icons/Remove";
+import AddIcon from "@material-ui/icons/Add";
+import { Tooltip } from "@material-ui/core";
 import { useStateProviderValue } from "../../StateProvider";
 import firebase from "firebase";
 
@@ -20,22 +26,18 @@ const Store = () => {
     description: "",
     price: "",
     quantity: "",
+    quantityOrdered: "",
     type: "",
     category: "",
     image: null,
+    forSale: null,
   });
 
   useEffect(() => {
     if (user) {
       const unsubscribe = getStoreInventory2(user?.uid, setInventory);
-      //   const getInventory = async () => {
-      //     const data = await getStoreInventory(user?.uid);
-      //     console.log("2");
-      //     console.log(data);
-      //     setInventory(data);
-      //   };
 
-      //   getInventory();
+      //unsubscribe to prevent multiple listeners
       return unsubscribe;
     }
   }, [user]);
@@ -52,6 +54,8 @@ const Store = () => {
           <th>Quantity Available</th>
           <th>Quantity Ordered</th>
           <th>Income</th>
+          <th>Action</th>
+          <th>Delete Item</th>
         </tr>
       </thead>
     );
@@ -79,8 +83,36 @@ const Store = () => {
                 <td>{row.description}</td>
                 <td>{row.type}</td>
                 <td>{row.quantity}</td>
-                <td># ordered</td>
+                <td>{row.quantityOrdered}</td>
                 <td>income</td>
+                <td>
+                  {row.forSale ? (
+                    <button
+                      onClick={() => {
+                        delistItem(row.skuId);
+                      }}
+                    >
+                      <Tooltip title="Delist Item">
+                        <RemoveIcon />
+                      </Tooltip>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => {
+                        relistItem(row.skuId);
+                      }}
+                    >
+                      <Tooltip title="Relist Item">
+                        <AddIcon />
+                      </Tooltip>
+                    </button>
+                  )}
+                </td>
+                <td>
+                  <Tooltip title="Delete Item">
+                    <DeleteIcon />
+                  </Tooltip>
+                </td>
               </tr>
             );
           })}
@@ -153,6 +185,7 @@ const Store = () => {
     }
   };
 
+  console.log(inventory);
   return (
     <div className="store">
       <div className="store__inventory">
