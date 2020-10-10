@@ -65,9 +65,9 @@ const Feed = () => {
             : "Finding tasty meals.."}
         </tbody>
       </Table>
-      <div className="feed__pagination">
+      {/* <div className="feed__pagination">
         <PaginationArrows />
-      </div>
+      </div> */}
       <ItemConfirmation
         showConfirmation={showConfirmation}
         handleCloseConfirmation={handleCloseConfirmation}
