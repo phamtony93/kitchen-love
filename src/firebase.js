@@ -2,9 +2,11 @@ import React from "react";
 import config from "./config";
 import firebase from "firebase";
 
+
+
 // let firebase = require("firebase/app")
 const firebaseConfig = config.firebaseConfig;
-
+const PAGESIZE = 3;
 // Initialize Firebase
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 export const auth = firebase.auth();
@@ -87,19 +89,69 @@ export const getAccessableRoutesFromRole = (role) => {
 
 //Use one time pull vs. listener to prevent UI from updating real time
 export const getListings = async () => {
-  const snapshot = await firestore
+  const listingsSnapshot = await firestore
     .collection("listings")
-    // firebase does not allow orderBy clause with where condition testing for equality. Will have to move this logic after pagination is implemented
-    .where("forSale", "==", true)
-    // .limit(3)
-    // .orderBy("name")
+    // manually create composite index for forSale + skuId 
+    // .where("forSale", "==", true)
+    .orderBy("skuId")
+    .limit(PAGESIZE)
+    // .startAfter("lCuJ3NkGO27EziD8bPvT")
     .get();
-  return snapshot.docs.map((doc) => {
-    let data = doc.data();
-    data.id = doc.id;
-    return data;
-  });
+
+  const dataDocs = listingsSnapshot.docs
+
+  const data = dataDocs.map(doc => {
+    return {
+      ...doc.data(),
+      skuId: doc.id,
+    }
+  })
+
+  const response = {
+    data: data,
+    last_visible: dataDocs[dataDocs.length - 1]
+  }
+  return response
 };
+
+export const nextPage = async (last) => {
+  const nextSnapshot = await firestore.collection("listings").orderBy("skuId").startAfter(last).limit(PAGESIZE).get();
+  const dataDocs = nextSnapshot.docs
+  const data = dataDocs.map(doc => {
+    return {
+      ...doc.data(),
+      skuId: doc.id
+    }
+  })
+
+  const response = {
+    data: data,
+    last_visible: dataDocs[dataDocs.length - 1],
+    first_visible: dataDocs[0]
+  }
+
+  return response
+}
+
+export const prevPage = async (first) => {
+  console.log('first is >>>> ', first)
+  const nextSnapshot = await firestore.collection("listings").orderBy("skuId").endBefore(first).limit(PAGESIZE).get();
+  const dataDocs = nextSnapshot.docs
+  const data = dataDocs.map(doc => {
+    return {
+      ...doc.data(),
+      skuId: doc.id
+    }
+  })
+
+  const response = {
+    data: data,
+    last_visible: dataDocs[dataDocs.length - 1],
+    first_visible: dataDocs[dataDocs.length - 1]
+  }
+  console.log('prev response >>> ', response)
+  return response
+}
 
 export const createOrder = async (order) => {
   const res = await firestore.collection("orders").add(order);

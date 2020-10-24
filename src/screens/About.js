@@ -8,13 +8,6 @@ const About = () => {
   return (
     <div>
       We are on a mission to connect passionate chefs with hungry customers.
-      <button
-        onClick={async () => {
-          console.log(await getStoreInventory("fjZEyrTZL0dvZJvBh6nJe6s6o593"));
-        }}
-      >
-        test
-      </button>
     </div>
   );
 };

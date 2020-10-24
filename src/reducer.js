@@ -75,6 +75,16 @@ const reducer = (state, action) => {
         ...state,
         listings: action.listings,
       };
+    case "SET_LAST_VISIBLE_LISTING":
+      return {
+        ...state,
+        last_visible_listing: action.last_visible_listing
+      };
+    case "SET_FIRST_VISIBLE_LISTING":
+      return {
+        ...state,
+        first_visible_listing: action.first_visible_listing
+      };
     default:
       return state;
   }

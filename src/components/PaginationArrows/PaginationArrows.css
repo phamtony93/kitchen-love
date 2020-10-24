@@ -3,3 +3,7 @@
   display: flex;
   margin: 10px;
 }
+
+.paginationArrows > button {
+  margin: 5px;
+}

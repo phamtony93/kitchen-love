@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Table } from "react-bootstrap";
-import { getListings } from "../../firebase";
+import { getListings, nextPage, prevPage } from "../../firebase";
 import FoodCard from "../../components/FoodCard/FoodCard";
 import ItemConfirmation from "../../components/ItemConfirmation/ItemConfirmation";
 import PaginationArrows from "../../components/PaginationArrows/PaginationArrows.js";
@@ -8,7 +8,7 @@ import { useStateProviderValue } from "../../StateProvider";
 import "./Feed.css";
 
 const Feed = () => {
-  const [{ listings, cart }, dispatch] = useStateProviderValue();
+  const [{ listings, cart, last_visible_listing }, dispatch] = useStateProviderValue();
 
   let [showConfirmation, setShowConfirmation] = useState(false);
   let [itemIdToConfirm, setItemIdToConfirm] = useState(null);
@@ -22,16 +22,52 @@ const Feed = () => {
     getListings().then((listings) => {
       dispatch({
         type: "SET_LISTINGS",
-        listings: listings,
+        listings: listings.data,
       });
+      dispatch({
+        type: "SET_LAST_VISIBLE_LISTING",
+        last_visible_listing: listings.last_visible
+      })
     });
   }, []);
 
   const getDetailsFromListings = (id) => {
     if (id === null) return null;
-    return listings.find((obj) => obj.id === itemIdToConfirm);
+    return listings.find((obj) => obj.skuId === itemIdToConfirm);
   };
 
+  const nextListingsPage = async () => {
+    const listings = await nextPage(last_visible_listing);
+    dispatch({
+      type: "SET_LISTINGS",
+      listings: listings.data
+    })
+    dispatch({
+      type: "SET_LAST_VISIBLE_LISTING",
+      last_visible_listing: listings.last_visible
+    })
+    dispatch({
+      type: "SET_FIRST_VISIBLE_LISTING",
+      first_visible_listing: listings.first_visible
+    })
+  }
+
+  const prevListingsPage = async () => {
+    const listings = await prevPage(last_visible_listing);
+    console.log('listings >>>>>>>', listings)
+    dispatch({
+      type: "SET_LISTINGS",
+      listings: listings.data
+    })
+    dispatch({
+      type: "SET_LAST_VISIBLE_LISTING",
+      last_visible_listing: listings.last_visible
+    })
+    dispatch({
+      type: "SET_FIRST_VISIBLE_LISTING",
+      first_visible_listing: listings.first_visible
+    })    
+  }
   //Convert array into array of td FoodCards
   let listingsToFoodCards = listings
     ? listings.map((listing) => {
@@ -54,7 +90,7 @@ const Feed = () => {
     foodCardsRows.push(listingsToFoodCards.slice(i, lastRowCheck));
   }
 
-  console.log("listings >>>>>>>>", listings);
+  // console.log('listings >>> ', listings)
 
   return (
     <div className="feed">
@@ -65,9 +101,9 @@ const Feed = () => {
             : "Finding tasty meals.."}
         </tbody>
       </Table>
-      {/* <div className="feed__pagination">
-        <PaginationArrows />
-      </div> */}
+      <div className="feed__pagination">
+        <PaginationArrows next={nextListingsPage} prev={prevListingsPage}/>
+      </div>
       <ItemConfirmation
         showConfirmation={showConfirmation}
         handleCloseConfirmation={handleCloseConfirmation}
