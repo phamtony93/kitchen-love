@@ -4,7 +4,7 @@ import { getCartTotal } from "../../reducer";
 import { useStateProviderValue } from "../../StateProvider";
 import CurrencyFormat from "react-currency-format";
 
-const TAX_RATE = 0.875;
+const TAX_RATE = 0.0875;
 
 function Subtotal() {
   const [{ cart }, dispatch] = useStateProviderValue();

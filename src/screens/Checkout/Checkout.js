@@ -60,7 +60,8 @@ const Checkout = () => {
         customerId: user?.uid,
         order: cart,
         orderDate: paymentIntent.created,
-        amount: paymentIntent.amount,
+        // concert payment intent back from cents to dollars
+        amount: paymentIntent.amount / 100,
       });
 
       //Clear basket
